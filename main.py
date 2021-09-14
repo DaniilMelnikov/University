@@ -30,6 +30,26 @@ class Student:
             f'Завершённые курсы: {", ".join(self.finished_courses)} \n'
         return res
 
+    def __lt__(self, other):
+        sum_len = 0
+        sum_grade = 0
+        for value in self.grades.values():
+            for grade in value:
+                sum_len += 1
+                sum_grade += grade
+        self.result = sum_grade / sum_len
+        sum_len = 0
+        sum_grade = 0
+        for value in other.grades.values():
+            for grade in value:
+                sum_len += 1
+                sum_grade += grade
+        other.result = sum_grade / sum_len
+        if not isinstance(other, Student):
+            print('Не студент!')
+            return
+        return self.result < other.result
+
 class Mentor:
     def __init__(self, name, surname):
         self.name = name
@@ -67,13 +87,21 @@ class Reviewer(Mentor):
         res = f'Имя: {self.name} \nФамилия: {self.surname} \n'
         return res
 
-cool_lecturer = Lecturer('Som', 'Bud')
-cool_lecturer.courses_attached += ['Python']
+Python_lecturer = Lecturer('Som', 'Bud')
+Python_lecturer.courses_attached += ['Python']
+
+GIT_lecturer = Lecturer('Othe', 'Green')
+GIT_lecturer.courses_attached += ['GIT']
 
 best_student = Student('Ruoy', 'Eman', 'your_gender')
 best_student.courses_in_progress += ['Python', 'GIT']
-best_student.put_grade(cool_lecturer, 'Python', 10)
-best_student.put_grade(cool_lecturer, 'Python', 9)
+best_student.put_grade(Python_lecturer, 'Python', 10)
+best_student.put_grade(Python_lecturer, 'Python', 9)
+
+other_student = Student('Serkan', 'Boulat', 'man')
+other_student.courses_in_progress += ['Python', 'GIT']
+other_student.put_grade(GIT_lecturer, 'GIT', 9)
+other_student.put_grade(GIT_lecturer, 'GIT', 10)
 
 cool_reviewer = Reviewer('Some', 'Buddy')
 cool_reviewer.courses_attached += ['Python']
@@ -83,6 +111,13 @@ cool_reviewer.put_grade(best_student, 'Python', 10)
 cool_reviewer.put_grade(best_student, 'Python', 10)
 cool_reviewer.put_grade(best_student, 'GIT', 9)
 
+cool_reviewer.put_grade(other_student, 'Python', 10)
+cool_reviewer.put_grade(other_student, 'GIT', 9)
+cool_reviewer.put_grade(other_student, 'GIT', 9)
+
+
+print(best_student > other_student)
+
 print(cool_reviewer)
-print(cool_lecturer)
+print(Python_lecturer)
 print(best_student)
