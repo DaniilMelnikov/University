@@ -107,37 +107,51 @@ class Reviewer(Mentor):
         res = f'Имя: {self.name} \nФамилия: {self.surname} \n'
         return res
 
-Python_lecturer = Lecturer('Som', 'Bud')
+Python_lecturer = Lecturer('Python', 'Javov')
 Python_lecturer.courses_attached += ['Python']
 
-GIT_lecturer = Lecturer('Othe', 'Green')
+GIT_lecturer = Lecturer('Git', 'Consolov')
 GIT_lecturer.courses_attached += ['GIT']
 
-best_student = Student('Ruoy', 'Eman', 'your_gender')
+best_student = Student('Eda', 'Eldis', 'woman')
 best_student.courses_in_progress += ['Python', 'GIT']
+best_student.finished_courses += ['English']
 best_student.put_grade(Python_lecturer, 'Python', 10)
 best_student.put_grade(GIT_lecturer, 'GIT', 9)
 
 other_student = Student('Serkan', 'Boulat', 'man')
 other_student.courses_in_progress += ['Python', 'GIT']
+other_student.finished_courses += ['English']
 other_student.put_grade(Python_lecturer, 'Python', 8)
-other_student.put_grade(GIT_lecturer, 'GIT', 1)
+other_student.put_grade(GIT_lecturer, 'GIT', 8)
 
-cool_reviewer = Reviewer('Some', 'Buddy')
+cool_reviewer = Reviewer('Funny', 'Flower')
 cool_reviewer.courses_attached += ['Python']
 cool_reviewer.courses_attached += ['GIT']
 
+cool_reviewer.put_grade(best_student, 'English', 8)
 cool_reviewer.put_grade(best_student, 'Python', 10)
-cool_reviewer.put_grade(best_student, 'Python', 10)
-cool_reviewer.put_grade(best_student, 'GIT', 9)
+cool_reviewer.put_grade(best_student, 'GIT', 10)
 
-cool_reviewer.put_grade(other_student, 'Python', 10)
+cool_reviewer.put_grade(other_student, 'English', 10)
 cool_reviewer.put_grade(other_student, 'GIT', 9)
 cool_reviewer.put_grade(other_student, 'GIT', 9)
+
+other_reviewer = Reviewer('Allknower', 'Masterov')
+
+other_reviewer.put_grade(best_student, 'English', 9)
+other_reviewer.put_grade(best_student, 'Python', 8)
+other_reviewer.put_grade(best_student, 'GIT', 10)
+
+other_reviewer.put_grade(other_student, 'English', 9)
+other_reviewer.put_grade(other_student, 'Python', 8)
+other_reviewer.put_grade(other_student, 'GIT', 10)
 
 print(best_student > other_student)
 print(GIT_lecturer < Python_lecturer)
+print(other_reviewer)
 print(cool_reviewer)
 print(Python_lecturer)
 print(GIT_lecturer)
 print(best_student)
+print(other_student)
