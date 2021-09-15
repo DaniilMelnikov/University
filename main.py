@@ -106,6 +106,26 @@ class Reviewer(Mentor):
     def __str__(self):
         res = f'Имя: {self.name} \nФамилия: {self.surname} \n'
         return res
+list_student = []
+
+
+def student_avr_mark(student_list, course):
+    count = 0
+    sum_avr_grade = 0
+    for student in student_list:
+        if isinstance(student, Student):
+            count += 1
+            sum_len = 0
+            sum_grade = 0
+            for value in student.grades.values():
+                for grade in value:
+                    sum_len += 1
+                    sum_grade += grade
+            student.student_avr_grade = sum_grade / sum_len
+            sum_avr_grade += student.student_avr_grade
+    result = sum_avr_grade / count
+    return print(f'Курс: {course} {result}')
+
 
 Python_lecturer = Lecturer('Python', 'Javov')
 Python_lecturer.courses_attached += ['Python']
@@ -146,6 +166,10 @@ other_reviewer.put_grade(best_student, 'GIT', 10)
 other_reviewer.put_grade(other_student, 'English', 9)
 other_reviewer.put_grade(other_student, 'Python', 8)
 other_reviewer.put_grade(other_student, 'GIT', 10)
+
+list_student.append(best_student)
+list_student.append(other_student)
+student_avr_mark(list_student, 'GIT')
 
 print(best_student > other_student)
 print(GIT_lecturer < Python_lecturer)
