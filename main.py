@@ -107,13 +107,13 @@ class Reviewer(Mentor):
         res = f'Имя: {self.name} \nФамилия: {self.surname} \n'
         return res
 list_student = []
-
+lecturer_list = []
 
 def student_avr_mark(student_list, course):
     count = 0
     sum_avr_grade = 0
     for student in student_list:
-        if isinstance(student, Student):
+        if isinstance(student, Student) and course in student.finished_courses or course in student.courses_in_progress:
             count += 1
             sum_len = 0
             sum_grade = 0
@@ -123,9 +123,29 @@ def student_avr_mark(student_list, course):
                     sum_grade += grade
             student.student_avr_grade = sum_grade / sum_len
             sum_avr_grade += student.student_avr_grade
+        else:
+            return 'Ошибка'
     result = sum_avr_grade / count
     return print(f'Курс: {course} {result}')
 
+def lecturer_avr_mark(lecturer_list, course):
+    count = 0
+    sum_avr_grade = 0
+    for lecturer in lecturer_list:
+        if isinstance(lecturer, Lecturer) and course in lecturer.courses_attached:
+            count += 1
+            sum_len = 0
+            sum_grade = 0
+            for value in lecturer.grades.values():
+                for grade in value:
+                    sum_len += 1
+                    sum_grade += grade
+            lecturer.lecturer_avr_grade = sum_grade / sum_len
+            sum_avr_grade += lecturer.lecturer_avr_grade
+        else:
+            return 'Ошибка'
+    result = sum_avr_grade / count
+    return print(f'Курс: {course} {result}')
 
 Python_lecturer = Lecturer('Python', 'Javov')
 Python_lecturer.courses_attached += ['Python']
@@ -170,6 +190,10 @@ other_reviewer.put_grade(other_student, 'GIT', 10)
 list_student.append(best_student)
 list_student.append(other_student)
 student_avr_mark(list_student, 'GIT')
+
+lecturer_list.append(Python_lecturer)
+lecturer_list.append(GIT_lecturer)
+lecturer_avr_mark(lecturer_list, 'GIT')
 
 print(best_student > other_student)
 print(GIT_lecturer < Python_lecturer)
